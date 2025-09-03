@@ -1,6 +1,7 @@
 import os
 import logging
 import base64
+import sqlite3
 from datetime import timedelta
 from typing import Optional
 from flask import Flask, render_template, request, session, redirect, url_for, flash
@@ -25,7 +26,7 @@ app.config['RATELIMIT_KEY_FUNC'] = get_remote_address
 flags = {
     'cavern': os.environ.get('FLAG_CAVERN', 'nhc{ech0es_1n_th3_d4rkn3ss}'),
     'graveyard': os.environ.get('FLAG_GRAVEYARD', 'nhc{l3g4cy_d3c0d3d_fr0m_run3s}'),
-    'shrine': os.environ.get('FLAG_SHRINE', 'nhc{w1sd0m_1n_l1ght}'),
+    'shrine': os.environ.get('FLAG_SHRINE', 'nhc{d3c3pt10n_r3v34ls_truth}'),
     'illusion': os.environ.get('FLAG_ILLUSION', 'nhc{sp1r1t_0f_4ir}'),
     'forest': os.environ.get('FLAG_FOREST', 'nhc{sh4d0ws_0f_d4rkn3ss}'),
     'volcano': os.environ.get('FLAG_VOLCANO', 'nhc{fl4m3_0f_s4cr1f1c3}')
@@ -112,6 +113,39 @@ def graveyard():
     # Then, encode the Base32 string with Base64
     encoded_flag = base64.b64encode(base32_encoded.encode()).decode()
     return render_template('graveyard.html', encoded_flag=encoded_flag)
+
+@app.route('/challenge/shrine', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def shrine():
+    """Handle the shrine challenge with SQL injection vulnerability."""
+    results = []
+    if request.method == 'POST':
+        query = request.form.get('query', '').strip()
+        if query:
+            try:
+                conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'shrine.db'))
+                cursor = conn.cursor()
+                # Vulnerable SQL query - direct string concatenation
+                sql_query = f"SELECT title, content FROM scrolls WHERE title LIKE '%{query}'"
+                cursor.execute(sql_query)
+                results = cursor.fetchall()
+                conn.close()
+            except Exception as e:
+                logger.error(f"Database error: {e}")
+                flash('An error occurred while searching.', 'danger')
+    return render_template('shrine.html', results=results)
+
+@app.route('/challenge/cavern')
+def cavern():
+    """Render the cavern challenge page."""
+    return render_template('cavern.html')
+
+@app.route('/reset')
+def reset():
+    """Reset the session for testing purposes."""
+    session.clear()
+    flash('Session reset. All progress cleared.', 'info')
+    return redirect(url_for('index'))
 
 @app.route('/forge')
 def forge():

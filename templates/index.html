@@ -7,3 +7,7 @@
     <button id="begin-button" style="display:none;">Begin the Adventure</button>
 </div>
 {% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}
