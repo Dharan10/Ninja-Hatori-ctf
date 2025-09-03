@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_wtf.csrf import CSRFProtect, generate_csrf
+from flask_talisman import Talisman
 
 # Load environment variables
 from dotenv import load_dotenv
@@ -15,13 +16,15 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev_secret_key_change_in_prod')
 app.config['SESSION_COOKIE_SECURE'] = os.environ.get('SESSION_SECURE', 'False').lower() == 'true'
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=2)
 app.config['RATELIMIT_KEY_FUNC'] = get_remote_address
 
 # Private flag dictionary - loaded from env vars
 flags = {
     'cavern': os.environ.get('FLAG_CAVERN', 'nhc{ech0es_1n_th3_d4rkn3ss}'),
-    'graveyard': os.environ.get('FLAG_GRAVEYARD', 'nhc{3t3rn1ty_0f_34rth}'),
+    'graveyard': os.environ.get('FLAG_GRAVEYARD', 'nhc{l3g4cy_d3c0d3d_fr0m_run3s}'),
     'shrine': os.environ.get('FLAG_SHRINE', 'nhc{w1sd0m_1n_l1ght}'),
     'illusion': os.environ.get('FLAG_ILLUSION', 'nhc{sp1r1t_0f_4ir}'),
     'forest': os.environ.get('FLAG_FOREST', 'nhc{sh4d0ws_0f_d4rkn3ss}'),
@@ -31,6 +34,7 @@ flags = {
 # Security Features
 limiter = Limiter(app)
 csrf = CSRFProtect(app)
+talisman = Talisman(app, content_security_policy={'default-src': "'self'"}, force_https=True)
 
 # Logging
 logging.basicConfig(level=logging.INFO)

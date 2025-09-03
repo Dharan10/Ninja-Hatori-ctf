@@ -17,10 +17,18 @@ function displayLine() {
         p.classList.add('fade-in');
         container.appendChild(p);
         currentLine++;
-        setTimeout(displayLine, 4000); // Adjust delay as needed
+        setTimeout(displayLine, 3000); // Reduced to 3s per line for faster pacing
     } else {
         button.style.display = 'block';
     }
 }
 
-displayLine();
+if (container && button) {
+    button.style.display = 'none'; // Ensure hidden initially
+    displayLine();
+    button.addEventListener('click', () => {
+        window.location.href = '/map';
+    });
+} else {
+    console.error('Story container or button not found');
+}
