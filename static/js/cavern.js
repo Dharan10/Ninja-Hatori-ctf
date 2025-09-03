@@ -5,7 +5,7 @@ const storyLines = [
     "The echoes cut deeper than steel, but Hattori walked on, steady and unbroken.",
     "Each step was a promise.",
     "Each breath, a vow.",
-    "When he claimed the Fragment of Echoes, the cavern fell silent, as if honoring his resolve."
+    "Good luck Hattori, may you find the strength within."
 ];
 
 let currentLine = 0;
@@ -18,7 +18,7 @@ function displayLine() {
         p.classList.add('fade-in');
         container.appendChild(p);
         currentLine++;
-        setTimeout(displayLine, 4000); // Adjust delay as needed
+        setTimeout(displayLine, 1500); // Adjust delay as needed
     }
 }
 

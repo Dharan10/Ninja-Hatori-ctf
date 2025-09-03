@@ -1,9 +1,3 @@
-Of course. You're right, the story's order should match the player's journey from the easiest to the hardest challenge.
-
-Here is the updated and final story for your story.md file, with the "Stage Stories" reordered to match our new challenge flow. The "Fragment of Echoes" is now correctly positioned as the first trial.
-
-Ninja Hattori and the Six Dragon Fragments: The Secret Scroll of Sogen
-
 The screen fades to black. A deep, solemn voice begins narrating.
 
 "The world once trembled beneath the shadow of a ruthless conqueror... Ryukazen, the Warlord of Shadows. His ambition knew no bounds. He swept through nations like a storm, leaving behind only ashes, silence, and despair."

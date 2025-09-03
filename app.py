@@ -1,5 +1,6 @@
 import os
 import logging
+import base64
 from datetime import timedelta
 from typing import Optional
 from flask import Flask, render_template, request, session, redirect, url_for, flash
@@ -98,10 +99,15 @@ def map():
         return redirect(url_for('map'))
     return render_template('map.html')
 
-@app.route('/challenge/cavern')
-def cavern():
-    """Render the cavern challenge."""
-    return render_template('cavern.html')
+@app.route('/challenge/graveyard')
+def graveyard():
+    """Render the graveyard challenge with double-encoded flag."""
+    flag = flags['graveyard']
+    # First, encode with Base32
+    base32_encoded = base64.b32encode(flag.encode()).decode()
+    # Then, encode the Base32 string with Base64
+    encoded_flag = base64.b64encode(base32_encoded.encode()).decode()
+    return render_template('graveyard.html', encoded_flag=encoded_flag)
 
 @app.route('/forge')
 def forge():
