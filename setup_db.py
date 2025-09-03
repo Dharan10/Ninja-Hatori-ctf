@@ -27,7 +27,7 @@ def setup_database():
         ("Legends of the Eternal Flame", "The eternal flame burns within those who seek justice, never extinguishing their resolve."),
         ("Secrets of the Wind Walker", "To walk with the wind is to become untouchable, a ghost in the storm."),
         ("Myths of the Dragon's Hoard", "Ancient treasures lie hidden, guarded by riddles and illusions."),
-        ("Tales of the Forgotten Warrior", "A warrior's legacy is etched in the scars of battle, remembered in the echoes of time.")
+        ("Tales of the Forgotten Warrior", "A warrior's legacy is etched in the scars of battle, remembered in the echoes of time!.")
     ]
 
     cursor.executemany('INSERT OR IGNORE INTO scrolls (title, content) VALUES (?, ?)', sample_data)
