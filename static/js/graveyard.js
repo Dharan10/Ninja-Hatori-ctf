@@ -13,7 +13,7 @@ const container = document.getElementById('story-container');
 function displayLine() {
     if (currentLine < storyLines.length) {
         const p = document.createElement('p');
-        p.textContent = storyLines[currentLine];
+        p.textContent = '"' + storyLines[currentLine] + '"';
         p.classList.add('fade-in');
         container.appendChild(p);
         currentLine++;
