@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>The Map of Shadows</h1>
+    <p>Navigate the paths of destiny. Choose your first trial.</p>
+    
+    <div class="challenges">
+        <a href="/challenge/cavern" class="{% if 'cavern' in session.get('solved', []) %}solved{% endif %}">Enter the Whispering Cavern</a>
+        <a href="#" class="{% if 'graveyard' in session.get('solved', []) %}solved{% endif %}">Enter the Dragon Graveyard</a>
+        <a href="#" class="{% if 'shrine' in session.get('solved', []) %}solved{% endif %}">Enter the Abandoned Shrine</a>
+        <a href="#" class="{% if 'illusion' in session.get('solved', []) %}solved{% endif %}">Enter the Illusion Chamber</a>
+        <a href="#" class="{% if 'forest' in session.get('solved', []) %}solved{% endif %}">Enter the Shadow Forest</a>
+        <a href="#" class="{% if 'volcano' in session.get('solved', []) %}solved{% endif %}">Enter the Volcano's Heart</a>
+    </div>
+    
+    <form method="POST" class="flag-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" name="flag" placeholder="Enter flag here" required maxlength="50">
+        <button type="submit">Submit Fragment</button>
+    </form>
+    
+    <div class="key-maker">
+        {% if session.get('solved', [])|length == 6 %}
+            <a href="/forge" class="active">Visit the Key Maker</a>
+        {% else %}
+            <span class="disabled">Visit the Key Maker (Locked - {{ 6 - session.get('solved', [])|length }} fragments remaining)</span>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
