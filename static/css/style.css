@@ -272,6 +272,176 @@ h1 {
     color: #ccc;
 }
 
+.shrine-archive {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #111;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+.shrine-archive h2 {
+    color: #fff;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.shrine-archive p {
+    color: #ccc;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #555;
+    background-color: #222;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.search-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-form button:hover {
+    background-color: #555;
+}
+
+.suggestions {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #222;
+    border-radius: 4px;
+    border: 1px solid #444;
+}
+
+.suggestions p {
+    color: #ccc;
+    margin: 0;
+}
+
+.results {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.results h3 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.results ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.results li {
+    background-color: #222;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #444;
+}
+
+.results li strong {
+    color: #ffa500;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.results li {
+    color: #ccc;
+}
+
+.spirit-wall {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #111;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+.spirit-wall h2 {
+    color: #fff;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.spirit-wall p {
+    color: #ccc;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.message-form {
+    margin-bottom: 20px;
+}
+
+.message-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #555;
+    background-color: #222;
+    color: #fff;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.message-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.message-form button:hover {
+    background-color: #555;
+}
+
+.messages {
+    text-align: left;
+}
+
+.messages h3 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.message {
+    background-color: #222;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #444;
+}
+
+.message p {
+    color: #ccc;
+    margin: 0;
+}
+
 .alert {
     padding: 10px;
     margin: 10px 0;

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>The Wall of Illusions</h1>
+    <div style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; background: rgba(0,0,0,0.5); padding: 5px; border-radius: 50%;" onclick="showHint()">💡</div>
+    <div id="story-container"></div>
+    
+    <div class="spirit-wall">
+        <h2>Wall of Illusions</h2>
+        <p>Leave a message for the fallen warriors. Your words may echo through the illusions.</p>
+        
+        <form method="POST" class="message-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <textarea name="message" placeholder="Write your message..." required></textarea>
+            <button type="submit">Submit Message</button>
+        </form>
+        
+        <div class="messages">
+            <h3>Messages from Visitors:</h3>
+            {% if reflected_message %}
+            <div class="message">
+                <p>{{ reflected_message|safe }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/spirit.js') }}"></script>
+<script>
+function showHint() {
+    alert("The illusions whisper of a hidden path: /flag");
+}
+</script>
+{% endblock %}

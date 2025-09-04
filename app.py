@@ -4,7 +4,7 @@ import base64
 import sqlite3
 from datetime import timedelta
 from typing import Optional
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, session, redirect, url_for, flash, make_response
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_wtf.csrf import CSRFProtect, generate_csrf
@@ -27,7 +27,7 @@ flags = {
     'cavern': os.environ.get('FLAG_CAVERN', 'nhc{ech0es_1n_th3_d4rkn3ss}'),
     'graveyard': os.environ.get('FLAG_GRAVEYARD', 'nhc{l3g4cy_d3c0d3d_fr0m_run3s}'),
     'shrine': os.environ.get('FLAG_SHRINE', 'nhc{d3c3pt10n_r3v34ls_truth}'),
-    'illusion': os.environ.get('FLAG_ILLUSION', 'nhc{sp1r1t_0f_4ir}'),
+    'spirit': os.environ.get('FLAG_SPIRIT', 'nhc{scr1pt3d_1llus10ns_sh4tt3r}'),
     'forest': os.environ.get('FLAG_FOREST', 'nhc{sh4d0ws_0f_d4rkn3ss}'),
     'volcano': os.environ.get('FLAG_VOLCANO', 'nhc{fl4m3_0f_s4cr1f1c3}')
 }
@@ -35,7 +35,7 @@ flags = {
 # Security Features
 limiter = Limiter(app)
 csrf = CSRFProtect(app)
-talisman = Talisman(app, content_security_policy={'default-src': "'self'"}, force_https=True)
+talisman = Talisman(app, content_security_policy={'default-src': "'self'", 'script-src': "'self' 'unsafe-inline'"}, force_https=True)
 
 # Logging
 logging.basicConfig(level=logging.INFO)
@@ -135,6 +135,28 @@ def shrine():
                 flash('An error occurred while searching.', 'danger')
     return render_template('shrine.html', results=results)
 
+@app.route('/challenge/spirit', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def spirit():
+    """Handle the spirit challenge with reflected XSS vulnerability."""
+    message = ""
+    if request.method == 'POST':
+        message = request.form.get('message', '').strip()
+        if message:
+            flash('Message submitted.', 'success')
+        # For reflected XSS, render the page with the message
+        response = make_response(render_template('spirit.html', messages=[], reflected_message=message, flags=flags))
+        return response
+    
+    # GET: no messages, no reflected message
+    response = make_response(render_template('spirit.html', messages=[], reflected_message="", flags=flags))
+    return response
+
+@app.route('/flag')
+def get_flag():
+    """Return the spirit flag."""
+    return flags['spirit']
+
 @app.route('/challenge/cavern')
 def cavern():
     """Render the cavern challenge page."""
@@ -142,9 +164,17 @@ def cavern():
 
 @app.route('/reset')
 def reset():
-    """Reset the session for testing purposes."""
+    """Reset the session and clear messages for testing purposes."""
     session.clear()
-    flash('Session reset. All progress cleared.', 'info')
+    try:
+        conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'shrine.db'))
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM messages')
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        logger.error(f"Error clearing messages: {e}")
+    flash('Session and messages reset. All progress cleared.', 'info')
     return redirect(url_for('index'))
 
 @app.route('/forge')

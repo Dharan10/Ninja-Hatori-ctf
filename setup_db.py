@@ -43,6 +43,24 @@ def setup_database():
 
     cursor.execute('INSERT INTO wisdom_secrets (hidden_title, hidden_content) VALUES (?, ?)', ('Secret Wisdom', 'nhc{d3c3pt10n_r3v34ls_truth}'))
 
+    # Create messages table for spirit challenge
+    cursor.execute('DROP TABLE IF EXISTS messages')
+    cursor.execute('''
+        CREATE TABLE messages (
+            id INTEGER PRIMARY KEY,
+            message_text TEXT NOT NULL
+        )
+    ''')
+
+    # Insert some sample messages
+    sample_messages = [
+        "May the spirits guide you.",
+        "Rest in peace, brave warriors.",
+        "Your sacrifice will not be forgotten."
+    ]
+
+    cursor.executemany('INSERT INTO messages (message_text) VALUES (?)', [(msg,) for msg in sample_messages])
+
     conn.commit()
     conn.close()
     print("Database setup complete.")
