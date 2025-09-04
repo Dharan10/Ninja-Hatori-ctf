@@ -163,22 +163,23 @@ def get_flag():
 def shadows():
     """Handle the shadows challenge with command injection vulnerability."""
     output = ""
+    error = ""
     if request.method == 'POST':
         ip = request.form.get('ip', '').strip()
         if ip:
             # Hard mode: Block injection chars to force complex payloads
             blocked_chars = [';', '|', '`', '&']
             if any(char in ip for char in blocked_chars):
-                flash('Invalid IP format. Only alphanumeric, dots, hyphens, $, (, ) allowed.', 'danger')
-                return redirect(url_for('shadows'))
-            try:
-                # Vulnerable: direct f-string in os.popen
-                command = f'echo "Scanning {ip}" ; ping -c 1 {ip}'
-                result = os.popen(command).read()
-                output = result
-            except Exception as e:
-                output = f"Error: {str(e)}"
-    return render_template('shadows.html', output=output)
+                error = 'Invalid IP format. Only alphanumeric, dots, hyphens, $, (, ) allowed.'
+            else:
+                try:
+                    # Vulnerable: direct f-string in os.popen
+                    command = f'echo "Scanning {ip}" ; ping -c 1 {ip}'
+                    result = os.popen(command).read()
+                    output = result
+                except Exception as e:
+                    output = f"Error: {str(e)}"
+    return render_template('shadows.html', output=output, error=error)
 
 @app.route('/challenge/cavern')
 def cavern():
