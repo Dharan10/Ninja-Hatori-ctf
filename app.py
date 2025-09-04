@@ -30,7 +30,8 @@ flags = {
     'spirit': os.environ.get('FLAG_SPIRIT', 'nhc{scr1pt3d_1llus10ns_sh4tt3r}'),
     'forest': os.environ.get('FLAG_FOREST', 'nhc{sh4d0ws_0f_d4rkn3ss}'),
     'volcano': os.environ.get('FLAG_VOLCANO', 'nhc{fl4m3_0f_s4cr1f1c3}'),
-    'shadows': os.environ.get('FLAG_SHADOWS', 'nhc{sh4d0w_c0mm4nd_3x3cut3d}')
+    'shadows': os.environ.get('FLAG_SHADOWS', 'nhc{sh4d0w_c0mm4nd_3x3cut3d}'),
+    'flame': os.environ.get('FLAG_FLAME', 'nhc{f1l3_p4th_tr4v3rs3d_w1th_fl4m3}')
 }
 
 # Security Features
@@ -181,6 +182,27 @@ def shadows():
                     output = f"Error: {str(e)}"
     return render_template('shadows.html', output=output, error=error)
 
+@app.route('/challenge/flame')
+def flame():
+    """Render the flame challenge page."""
+    return render_template('flame.html')
+
+@app.route('/challenge/flame/view')
+def flame_view():
+    """Vulnerable LFI route."""
+    scroll = request.args.get('scroll', '')
+    if not scroll:
+        return "No echo specified."
+    try:
+        # Vulnerable: no sanitization for ../
+        with open(f'uploads/{scroll}', 'r') as f:
+            content = f.read()
+        return content
+    except FileNotFoundError:
+        return "Echo not found."
+    except Exception as e:
+        return f"Error: {str(e)}"
+
 @app.route('/challenge/cavern')
 def cavern():
     """Render the cavern challenge page."""
@@ -212,6 +234,13 @@ def logout():
     session.clear()
     flash('Session cleared.', 'info')
     return redirect(url_for('index'))
+
+@app.route('/victory')
+def victory():
+    """Render the victory page if all challenges are solved."""
+    if len(session.get('solved', [])) < 6:
+        return redirect(url_for('map'))
+    return render_template('victory.html')
 
 @app.errorhandler(429)
 def ratelimit_handler(e):

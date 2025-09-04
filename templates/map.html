@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="container">
+    {% if session.get('solved', [])|length < 6 %}
     <h1>The Map of Shadows</h1>
     <p>Navigate the paths of destiny. Choose your first trial.</p>
     
@@ -11,7 +12,7 @@
         <a href="/challenge/shrine" class="{% if 'shrine' in session.get('solved', []) %}solved{% endif %}">Investigate the Shrine of Deception</a>
         <a href="/challenge/spirit" class="{% if 'spirit' in session.get('solved', []) %}solved{% endif %}">Face the Wall of Illusions</a>
         <a href="/challenge/shadows" class="{% if 'shadows' in session.get('solved', []) %}solved{% endif %}">Infiltrate the Shadow Garrison</a>
-        <a href="#" class="{% if 'volcano' in session.get('solved', []) %}solved{% endif %}">Enter the Volcano's Heart</a>
+        <a href="/challenge/flame" class="{% if 'flame' in session.get('solved', []) %}solved{% endif %}">Enter the Echo Chamber</a>
     </div>
     
     <form method="POST" class="flag-form">
@@ -21,15 +22,22 @@
     </form>
     
     <div class="key-maker">
-        {% if session.get('solved', [])|length == 5 %}
+        {% if session.get('solved', [])|length == 6 %}
             <a href="/forge" class="active">Visit the Key Maker</a>
         {% else %}
-            <span class="disabled">Visit the Key Maker (Locked - {{ 5 - session.get('solved', [])|length }} fragments remaining)</span>
+            <span class="disabled">Visit the Key Maker (Locked - {{ 6 - session.get('solved', [])|length }} fragments remaining)</span>
         {% endif %}
     </div>
     
     <div class="reset-link">
         <a href="/reset" style="font-size: 12px; color: #666;">Reset Progress (Testing)</a>
     </div>
+    {% else %}
+    <h1>Victory Awaits</h1>
+    <p>You have conquered all trials. The path to the Secret Scroll is open.</p>
+    <div class="victory-btn">
+        <a href="/victory" class="claim-btn">Claim the Secret Scroll of Sogen</a>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
