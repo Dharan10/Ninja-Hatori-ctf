@@ -29,13 +29,14 @@ flags = {
     'shrine': os.environ.get('FLAG_SHRINE', 'nhc{d3c3pt10n_r3v34ls_truth}'),
     'spirit': os.environ.get('FLAG_SPIRIT', 'nhc{scr1pt3d_1llus10ns_sh4tt3r}'),
     'forest': os.environ.get('FLAG_FOREST', 'nhc{sh4d0ws_0f_d4rkn3ss}'),
-    'volcano': os.environ.get('FLAG_VOLCANO', 'nhc{fl4m3_0f_s4cr1f1c3}')
+    'volcano': os.environ.get('FLAG_VOLCANO', 'nhc{fl4m3_0f_s4cr1f1c3}'),
+    'shadows': os.environ.get('FLAG_SHADOWS', 'nhc{sh4d0w_c0mm4nd_3x3cut3d}')
 }
 
 # Security Features
 limiter = Limiter(app)
 csrf = CSRFProtect(app)
-talisman = Talisman(app, content_security_policy={'default-src': "'self'", 'script-src': "'self' 'unsafe-inline'"}, force_https=True)
+talisman = Talisman(app, content_security_policy={'default-src': "'self'", 'script-src': "'self' 'unsafe-inline'", 'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com"}, force_https=True)
 
 # Logging
 logging.basicConfig(level=logging.INFO)
@@ -156,6 +157,28 @@ def spirit():
 def get_flag():
     """Return the spirit flag."""
     return flags['spirit']
+
+@app.route('/challenge/shadows', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def shadows():
+    """Handle the shadows challenge with command injection vulnerability."""
+    output = ""
+    if request.method == 'POST':
+        ip = request.form.get('ip', '').strip()
+        if ip:
+            # Hard mode: Block injection chars to force complex payloads
+            blocked_chars = [';', '|', '`', '&']
+            if any(char in ip for char in blocked_chars):
+                flash('Invalid IP format. Only alphanumeric, dots, hyphens, $, (, ) allowed.', 'danger')
+                return redirect(url_for('shadows'))
+            try:
+                # Vulnerable: direct f-string in os.popen
+                command = f'echo "Scanning {ip}" ; ping -c 1 {ip}'
+                result = os.popen(command).read()
+                output = result
+            except Exception as e:
+                output = f"Error: {str(e)}"
+    return render_template('shadows.html', output=output)
 
 @app.route('/challenge/cavern')
 def cavern():

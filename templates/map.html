@@ -10,7 +10,7 @@
         <a href="/challenge/graveyard" class="{% if 'graveyard' in session.get('solved', []) %}solved{% endif %}">Explore the Dragon's Graveyard</a>
         <a href="/challenge/shrine" class="{% if 'shrine' in session.get('solved', []) %}solved{% endif %}">Investigate the Shrine of Deception</a>
         <a href="/challenge/spirit" class="{% if 'spirit' in session.get('solved', []) %}solved{% endif %}">Face the Wall of Illusions</a>
-        <a href="#" class="{% if 'forest' in session.get('solved', []) %}solved{% endif %}">Enter the Shadow Forest</a>
+        <a href="/challenge/shadows" class="{% if 'shadows' in session.get('solved', []) %}solved{% endif %}">Infiltrate the Shadow Garrison</a>
         <a href="#" class="{% if 'volcano' in session.get('solved', []) %}solved{% endif %}">Enter the Volcano's Heart</a>
     </div>
     
@@ -21,10 +21,10 @@
     </form>
     
     <div class="key-maker">
-        {% if session.get('solved', [])|length == 6 %}
+        {% if session.get('solved', [])|length == 5 %}
             <a href="/forge" class="active">Visit the Key Maker</a>
         {% else %}
-            <span class="disabled">Visit the Key Maker (Locked - {{ 6 - session.get('solved', [])|length }} fragments remaining)</span>
+            <span class="disabled">Visit the Key Maker (Locked - {{ 5 - session.get('solved', [])|length }} fragments remaining)</span>
         {% endif %}
     </div>
     
