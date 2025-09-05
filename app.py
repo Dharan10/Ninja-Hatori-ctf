@@ -204,8 +204,8 @@ def flame_view():
             contents = os.listdir(path)
             return f"Directory contents: {', '.join(contents)}"
         else:
-            # Security: Only allow reading files in hidden directory
-            if 'hidden' not in path:
+            # Security: Only allow reading files in hidden directory or sample.txt
+            if 'hidden' not in path and 'sample.txt' not in path:
                 return "Access denied. Only echoes in hidden chambers are accessible."
             with open(path, 'r') as f:
                 content = f.read()
@@ -271,5 +271,5 @@ def ratelimit_handler(e):
     flash('Too many requests. Slow down!', 'warning')
     return redirect(url_for('map'))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
