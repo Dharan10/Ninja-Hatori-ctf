@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>The Shadow Garrison</h1>
+    <div id="story-container">
+    </div>
+    
+    <div class="recon-terminal">
+        <h2>Reconnaissance Terminal</h2>
+        <p>Scan enemy IP addresses for intelligence. Enter an IP to ping and gather data.</p>
+        
+        <form method="POST" class="scan-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input type="text" name="ip" placeholder="Enter IP address (e.g., 127.0.0.1)" required>
+            <button type="submit">Scan IP</button>
+        </form>
+        {% if error %}
+        <div class="error-message">{{ error }}</div>
+        {% endif %}
+        
+        {% if output %}
+        <div class="output-section">
+            <h3>Scan Results:</h3>
+            <pre>{{ output }}</pre>
+        </div>
+        {% endif %}
+    </div>
+    <a href="/map" class="return-btn">Return to Map</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/shadows.js') }}"></script>
+{% endblock %}

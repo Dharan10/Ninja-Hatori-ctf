@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>The Echo Chamber</h1>
+    <div id="story-container">
+    </div>
+    
+    <div class="chamber">
+        <h2>Echo Chamber</h2>
+        <p>The chamber resonates with echoes of the past. Tune into the frequencies to hear the ancient messages.</p>
+        
+        <p>Sample Echo: <a href="/challenge/flame/view?scroll=sample.txt">Listen to a sample echo</a></p>
+    </div>
+    <a href="/map" class="return-btn">Return to Map</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const storyLines = [
+    "At last, the final trial demanded sacrifice. To earn the fragment, Hattori bled. His strength faltered, his body shook.",
+    "Yet the fire of vengeance lit his path. With every scar, he remembered Ryukazen’s cruelty.",
+    "With every wound, he fueled his will. The Fragment of Flame healed his spirit, even if his flesh remained broken."
+];
+
+let currentLine = 0;
+const container = document.getElementById('story-container');
+
+function displayLine() {
+    if (currentLine < storyLines.length) {
+        const p = document.createElement('p');
+        p.textContent = '"' + storyLines[currentLine] + '"';
+        p.classList.add('fade-in');
+        container.appendChild(p);
+        currentLine++;
+        setTimeout(displayLine, 1500);
+    }
+}
+
+// Only show story once per session
+if (!localStorage.getItem('flameStoryShown')) {
+    displayLine();
+    localStorage.setItem('flameStoryShown', 'true');
+}
+</script>
+{% endblock %}

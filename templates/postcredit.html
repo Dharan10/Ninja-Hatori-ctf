@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Post-Credit Scene</h1>
+    <div id="story-container">
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="return-btn">Return to Landing Page</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const storyLines = [
+    "Years passed. Tales spread of the lone ninja who faced the Shadow Warlord and brought peace.",
+    "They spoke his name with reverence — Hattori, bearer of the Six Fragments, guardian of the Secret Scroll.",
+    "And though he vanished into legend, the world knew this truth:",
+    "as long as courage lives in the hearts of warriors, the light of Hattori will never fade.",
+    "",
+    "The story of Hattori continues through...",
+    "Ninja Hattori and the Five Umbral Lords",
+    "",
+    "Thank you for playing Ninja Hattori and the Six Dragon Fragments!",
+    "Directed by: Dharan",
+    "Produced by: Dharan",
+    "Written by: Dharan",
+    "Starring: Hattori as the Hero",
+    "Special Thanks: To all players"
+];
+
+let currentLine = 0;
+const container = document.getElementById('story-container');
+
+function displayLine() {
+    if (currentLine < storyLines.length) {
+        const p = document.createElement('p');
+        p.textContent = '"' + storyLines[currentLine] + '"';
+        p.classList.add('fade-in');
+        container.appendChild(p);
+        currentLine++;
+        setTimeout(displayLine, 2000); // Slower for post-credit
+    }
+}
+
+displayLine();
+</script>
+{% endblock %}

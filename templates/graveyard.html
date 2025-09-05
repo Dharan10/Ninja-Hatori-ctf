@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>The Dragon's Graveyard</h1>
+    <div id="story-container"></div>
+    <div class="tombstone">
+        <h2>Ancient Tombstone</h2>
+        <p>Carved into the stone are mysterious runes:</p>
+        <pre>{{ encoded_flag }}</pre>
+        <p>Decode the runes to uncover the fragment's secret.</p>
+    </div>
+    <a href="/map" class="return-btn">Return to Map</a>
+</div>
+<script src="{{ url_for('static', filename='js/graveyard.js') }}"></script>
+{% endblock %}

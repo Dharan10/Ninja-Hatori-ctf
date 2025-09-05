@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>The Secret Scroll of Sogen</h1>
+    
+    <div class="victory-actions">
+        <a href="/confrontation" class="battle-btn">Face the Ryukazen</a>
+    </div>
+    
+    <div class="story-section">
+        <h2>Entering the Dragon Temple</h2>
+        <div id="story-container">
+        </div>
+    </div>
+    
+    <div class="final-flag">
+        <h3>The Secret Scroll is Yours!</h3>
+        <p>Final Flag: <strong>smn{Th3_S3cr3t_Scr0ll_0f_S0g3n_1s_Y0urs!}</strong></p>
+    </div>
+    
+    <div class="victory-actions">
+        <a href="/postcredit" class="credit-btn">View Post-Credit Scene</a>
+    </div>
+    
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const storyLines = [
+    "The temple doors groaned as the key turned. Ancient chains shattered, the seal broke, and the path forward revealed a darkness deeper than night.",
+    "Hattori’s heart thundered. Beyond those doors awaited Ryukazen himself — the Warlord who had taken everything from him.",
+    "This was no longer just a battle. This was destiny."
+];
+
+let currentLine = 0;
+const container = document.getElementById('story-container');
+
+function displayLine() {
+    if (currentLine < storyLines.length) {
+        const p = document.createElement('p');
+        p.textContent = '"' + storyLines[currentLine] + '"';
+        p.classList.add('fade-in');
+        container.appendChild(p);
+        currentLine++;
+        setTimeout(displayLine, 2000);
+    }
+}
+
+displayLine();
+</script>
+{% endblock %}

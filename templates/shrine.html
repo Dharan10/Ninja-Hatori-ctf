@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>The Shrine of Deception</h1>
+    <div id="story-container"></div>
+    
+    <div class="shrine-archive">
+        <h2>Ancient Scrolls Archive</h2>
+        <p>Search for wisdom in the scrolls of the ancients. Enter your query to reveal hidden knowledge.</p>
+        
+        <div class="suggestions">
+            <p><strong>Suggested Titles to Search:</strong> History of the North, Art of the Silent Blade, Tales of the Dragon Temple, Wisdom of the Ancients, The Path of the Ninja, Chronicles of the Shadow Clan, Legends of the Eternal Flame, Secrets of the Wind Walker, Myths of the Dragon's Hoard, Tales of the Forgotten Warrior</p>
+        </div>
+        
+        <form method="POST" class="search-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input type="text" name="query" placeholder="Search for a scroll title..." required>
+            <button type="submit">Search</button>
+        </form>
+        
+        {% if results %}
+        <div class="results">
+            <h3>Search Results:</h3>
+            <ul>
+                {% for title, content in results %}
+                <li>
+                    <strong>{{ title }}</strong><br>
+                    {{ content }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    <a href="/map" class="return-btn">Return to Map</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/shrine.js') }}"></script>
+{% endblock %}

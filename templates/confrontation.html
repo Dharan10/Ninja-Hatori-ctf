@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>The Final Confrontation</h1>
+    <div id="story-container">
+    </div>
+    <div id="victory-btn" style="display: none; text-align: center; margin-top: 20px;">
+        <a href="/victory" class="claim-btn">Claim Victory</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const storyLines = [
+    "Inside, the air was heavy with death. Ryukazen stood atop a throne of bones, his eyes burning with cruel fire. His laughter echoed through the chamber.",
+    "‘So the last of the Hattori dares to face me. You lost your bloodline, your village, your very soul… yet still you crawl to me. Do you think your pitiful blade can defeat destiny itself?’",
+    "Hattori’s grip tightened on his sword. His voice shook with both rage and grief.",
+    "‘I lost everything because of you, Ryukazen. My family. My people. My honor. But today... I reclaim it all. Not for myself, but for those who can no longer fight. Their spirit burns through me.’",
+    "The two clashed. Shadows against light. Pain against will. For hours it seemed the temple shook with their fury.",
+    "In the final moment, Hattori called upon the power of the scroll of Sogen. His blade shone like the rising sun, and with a final strike, he cut through the darkness of Ryukazen."
+];
+
+let currentLine = 0;
+const container = document.getElementById('story-container');
+
+function displayLine() {
+    if (currentLine < storyLines.length) {
+        const p = document.createElement('p');
+        p.textContent = '"' + storyLines[currentLine] + '"';
+        p.classList.add('fade-in');
+        container.appendChild(p);
+        currentLine++;
+        setTimeout(displayLine, 2500); // Slower for dramatic effect
+    } else {
+        // Show victory button after story
+        setTimeout(() => {
+            document.getElementById('victory-btn').style.display = 'block';
+        }, 1000);
+    }
+}
+
+displayLine();
+</script>
+{% endblock %}
