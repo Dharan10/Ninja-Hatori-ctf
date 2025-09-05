@@ -22,7 +22,7 @@ path = f'uploads/{scroll}'.replace('\\', '/')
 
 ### Step 3: Test Basic LFI
 1. Try the sample: `/challenge/flame/view?scroll=sample.txt`
-2. Should display: "This is a sample relic from the vault."
+2. Should display: "This is a sample relic from the vault." and when you try lfi using basic ../ method it should show like echo error something like that
 
 ### Step 4: Bypass Path Restrictions
 1. Blocked: `/` (forward slash)
@@ -90,7 +90,7 @@ The response should contain: `nhc{f1l3_p4th_tr4v3rs3d_w1th_fl4m3}`
 ```
 ..\..\..\logs\access.log
 ```
-
+the above paylods wont work as for added security purpose the /flame/scroll?view= only allow hidden and secret in it other payloads wont work 
 ## Testing Techniques
 
 ### Manual Testing

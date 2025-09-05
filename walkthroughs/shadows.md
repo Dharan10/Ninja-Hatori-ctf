@@ -131,4 +131,4 @@ print("Command:", command)
 - Environment variable manipulation
 
 ## Next Steps
-Submit the flag extracted from the file to unlock the Flame challenge.
+Submit the flag extracted from the file.

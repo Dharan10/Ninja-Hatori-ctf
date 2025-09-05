@@ -38,7 +38,7 @@ The flag appears as a long string of characters. The page indicates it's double-
    decoded_base32 = base64.b32decode(base32_string).decode()
    print(decoded_base32)
    ```
-
+Another simple step is jsut copy the base and go to cyber chef and paste it below on the output field it will show a wand click it it will automaticaly decode and show the flag 
 ### Step 5: Get the Flag
 The final decoded string should be: `nhc{l3g4cy_d3c0d3d_fr0m_run3s}`
 
@@ -73,29 +73,6 @@ The final decoded string should be: `nhc{l3g4cy_d3c0d3d_fr0m_run3s}`
 - Monitor for unusual decoding activities
 - Use secure storage for sensitive data
 
-## Alternative Methods
-
-### Online Tools
-- Use websites like base64decode.org
-- CyberChef (multi-tool for encoding/decoding)
-- Command line: `echo "string" | base64 -d`
-
-### Python Script
-```python
-import base64
-
-def decode_graveyard(encoded_string):
-    # First decode Base64
-    base32 = base64.b64decode(encoded_string).decode()
-    # Then decode Base32
-    flag = base64.b32decode(base32).decode()
-    return flag
-
-# Usage
-encoded = "YOUR_STRING_HERE"
-print(decode_graveyard(encoded))
-```
-
 ## Common Mistakes
 - Decoding in wrong order (Base32 first instead of Base64)
 - Forgetting to handle padding characters (=)
@@ -103,4 +80,4 @@ print(decode_graveyard(encoded))
 - Not copying the full encoded string
 
 ## Next Steps
-Submit the decoded flag on the map page to unlock the Shrine challenge.
+Submit the decoded flag on the map page.

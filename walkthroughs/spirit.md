@@ -27,7 +27,7 @@ The page reflects user input using Jinja2's `|safe` filter:
 2. The page should execute the JavaScript
 
 ### Step 4: Craft Payload to Fetch Flag
-1. Use XSS to make a request to `/flag` endpoint
+1. Use XSS to make a request to `/flag` endpoint 
 2. Capture the response and display it
 3. Payload:
    ```html

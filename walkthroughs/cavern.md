@@ -69,4 +69,4 @@ The flag is hidden in a CSS comment:
 - Not examining CSS and JavaScript files
 
 ## Next Steps
-Once you have the flag, submit it on the map page to unlock the next challenge.
+Once you have the flag, submit it on the map and go to next challenge 
