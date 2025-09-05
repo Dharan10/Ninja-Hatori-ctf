@@ -226,7 +226,8 @@ def reset():
 @app.route('/forge')
 def forge():
     """Render the forge page."""
-    return render_template('forge.html')
+    final_flag = os.environ.get('FINAL_FLAG', 'smn{Th3_S3cr3t_Scr0ll_0f_S0g3n_1s_Y0urs!}')
+    return render_template('forge.html', final_flag=final_flag)
 
 @app.route('/logout')
 def logout():
@@ -241,6 +242,16 @@ def victory():
     if len(session.get('solved', [])) < 6:
         return redirect(url_for('map'))
     return render_template('victory.html')
+
+@app.route('/postcredit')
+def postcredit():
+    """Render the post-credit scene."""
+    return render_template('postcredit.html')
+
+@app.route('/confrontation')
+def confrontation():
+    """Render the final confrontation scene."""
+    return render_template('confrontation.html')
 
 @app.errorhandler(429)
 def ratelimit_handler(e):

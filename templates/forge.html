@@ -3,7 +3,44 @@
 {% block content %}
 <div class="container">
     <h1>The Forge of Koen</h1>
-    <p>Koen the Key Maker awaits the six fragments.</p>
-    <p>Present your completed journey to forge the Dragon Seal Key.</p>
+    <div id="story-container">
+    </div>
+    <div id="final-flag" style="display: none;">
+        <h3>The Secret Scroll is Yours!</h3>
+        <p>Final Flag: <strong>{{ final_flag }}</strong></p>
+    </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const storyLines = [
+    "With all six fragments gathered, Hattori sought Koen, the ancient creator of the Dragon Seal.",
+    "Koen’s spirit appeared in a blaze of ethereal fire, his voice echoing like thunder.",
+    "‘Warrior, you carry the burden of worlds. I will forge the key from your fragments, but remember — the key not only opens the Dragon Temple... it opens the final path of your destiny. Do you have the will to face what lies beyond?’",
+    "Hattori knelt, clutching the fragments. His eyes filled with pain, with sorrow, but above all — with resolve.",
+    "He nodded, and the fragments fused in Koen’s hands, forming the Dragon Seal Key."
+];
+
+let currentLine = 0;
+const container = document.getElementById('story-container');
+
+function displayLine() {
+    if (currentLine < storyLines.length) {
+        const p = document.createElement('p');
+        p.textContent = '"' + storyLines[currentLine] + '"';
+        p.classList.add('fade-in');
+        container.appendChild(p);
+        currentLine++;
+        setTimeout(displayLine, 2000);
+    } else {
+        // Show final flag after story
+        setTimeout(() => {
+            document.getElementById('final-flag').style.display = 'block';
+        }, 1000);
+    }
+}
+
+displayLine();
+</script>
 {% endblock %}

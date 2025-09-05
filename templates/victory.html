@@ -4,49 +4,53 @@
 <div class="container">
     <h1>The Secret Scroll of Sogen</h1>
     
-    <div class="story-section">
-        <h2>Final Victory</h2>
-        <p>"Ryukazen fell to the ground, his reign of terror shattered. The chamber fell silent. Hattori stood, bloodied and broken, but victorious. The world had been freed from its tormentor."</p>
-        <p>"The scroll of Sogen unrolled before him, glowing with ancient power. Yet Hattori did not take it for himself. Instead, he laid it upon the temple altar."</p>
-        <p>‘Power alone cannot save the world. It is sacrifice... it is love... it is memory that gives meaning to strength.’</p>
-        <p>"The scroll’s light enveloped him, healing the scars of the world."</p>
-        
-        <div class="final-flag">
-            <h3>The Secret Scroll is Yours!</h3>
-            <p>Flag: <strong>smn{Th3_S3cr3t_Scr0ll_0f_S0g3n_1s_Y0urs!}</strong></p>
-        </div>
-    </div>
-    
-    <div class="story-section">
-        <h2>The Forging of the Dragon Seal Key</h2>
-        <p>"With all six fragments gathered, Hattori sought Koen, the ancient creator of the Dragon Seal. Koen’s spirit appeared in a blaze of ethereal fire, his voice echoing like thunder."</p>
-        <p>‘Warrior, you carry the burden of worlds. I will forge the key from your fragments, but remember — the key not only opens the Dragon Temple... it opens the final path of your destiny. Do you have the will to face what lies beyond?’</p>
-        <p>"Hattori knelt, clutching the fragments. His eyes filled with pain, with sorrow, but above all — with resolve. He nodded, and the fragments fused in Koen’s hands, forming the Dragon Seal Key."</p>
+    <div class="victory-actions">
+        <a href="/confrontation" class="battle-btn">Face the Ryukazen</a>
     </div>
     
     <div class="story-section">
         <h2>Entering the Dragon Temple</h2>
-        <p>"The temple doors groaned as the key turned. Ancient chains shattered, the seal broke, and the path forward revealed a darkness deeper than night. Hattori’s heart thundered. Beyond those doors awaited Ryukazen himself — the Warlord who had taken everything from him."</p>
-        <p>"This was no longer just a battle. This was destiny."</p>
+        <div id="story-container">
+        </div>
     </div>
     
-    <div class="story-section">
-        <h2>The Final Confrontation</h2>
-        <p>"Inside, the air was heavy with death. Ryukazen stood atop a throne of bones, his eyes burning with cruel fire. His laughter echoed through the chamber."</p>
-        <p>‘So the last of the Hattori dares to face me. You lost your bloodline, your village, your very soul… yet still you crawl to me. Do you think your pitiful blade can defeat destiny itself?’</p>
-        <p>"Hattori’s grip tightened on his sword. His voice shook with both rage and grief."</p>
-        <p>‘I lost everything because of you, Ryukazen. My family. My people. My honor. But today... I reclaim it all. Not for myself, but for those who can no longer fight. Their spirit burns through me.’</p>
-        <p>"The two clashed. Shadows against light. Pain against will. For hours it seemed the temple shook with their fury. In the final moment, Hattori called upon the power of the scroll of Sogen. His blade shone like the rising sun, and with a final strike, he cut through the darkness of Ryukazen."</p>
-    </div>
-    
-    <div class="story-section">
-        <h2>Post-Credit Scene</h2>
-        <p>"Years passed. Tales spread of the lone ninja who faced the Shadow Warlord and brought peace. They spoke his name with reverence — Hattori, bearer of the Six Fragments, guardian of the Secret Scroll."</p>
-        <p>"And though he vanished into legend, the world knew this truth: as long as courage lives in the hearts of warriors, the light of Hattori will never fade."</p>
+    <div class="victory-actions">
+        <a href="/postcredit" class="credit-btn">View Post-Credit Scene</a>
     </div>
     
     <div class="end-message">
         <p>Thank you for playing Ninja Hattori and the Six Dragon Fragments!</p>
+        <p>Directed by: Dharan</p>
+        <p>Produced by: Dharan</p>
+        <p>Written by: Dharan</p>
+        <p>Starring: Hattori as the Hero</p>
+        <p>Special Thanks: To all players</p>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const storyLines = [
+    "The temple doors groaned as the key turned. Ancient chains shattered, the seal broke, and the path forward revealed a darkness deeper than night.",
+    "Hattori’s heart thundered. Beyond those doors awaited Ryukazen himself — the Warlord who had taken everything from him.",
+    "This was no longer just a battle. This was destiny."
+];
+
+let currentLine = 0;
+const container = document.getElementById('story-container');
+
+function displayLine() {
+    if (currentLine < storyLines.length) {
+        const p = document.createElement('p');
+        p.textContent = '"' + storyLines[currentLine] + '"';
+        p.classList.add('fade-in');
+        container.appendChild(p);
+        currentLine++;
+        setTimeout(displayLine, 2000);
+    }
+}
+
+displayLine();
+</script>
 {% endblock %}
