@@ -193,11 +193,23 @@ def flame_view():
     scroll = request.args.get('scroll', '')
     if not scroll:
         return "No echo specified."
+    # Hard mode: Block forward slashes to force backslash usage
+    if '/' in scroll:
+        return "Invalid echo path."
     try:
-        # Vulnerable: no sanitization for ../
-        with open(f'uploads/{scroll}', 'r') as f:
-            content = f.read()
-        return content
+        # Vulnerable: no sanitization, replace \ with / for Linux paths
+        path = f'uploads/{scroll}'.replace('\\', '/')
+        if os.path.isdir(path):
+            # If directory, list contents
+            contents = os.listdir(path)
+            return f"Directory contents: {', '.join(contents)}"
+        else:
+            # Security: Only allow reading files in hidden directory
+            if 'hidden' not in path:
+                return "Access denied. Only echoes in hidden chambers are accessible."
+            with open(path, 'r') as f:
+                content = f.read()
+            return content
     except FileNotFoundError:
         return "Echo not found."
     except Exception as e:
